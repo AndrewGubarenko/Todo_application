@@ -2,8 +2,6 @@ package com.AndriiHubarenko.TodoApplication;
 
 import java.util.Date;
 
-import org.json.JSONObject;
-
 public class TodoBody{
 
 	private String objectId;
@@ -52,12 +50,4 @@ public class TodoBody{
 		this.isFinished = isFinished;
 	}
 
-	public JSONObject toJson() {
-		JSONObject json = new JSONObject();
-		json.put("Name", name);
-		json.put("Comment", comment);
-		json.put("DeadLine", deadLine);
-		json.put("IsFinished", isFinished);
-		return json;
-	}
 }

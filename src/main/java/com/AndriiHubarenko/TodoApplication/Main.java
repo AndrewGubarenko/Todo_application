@@ -1,6 +1,6 @@
 package com.AndriiHubarenko.TodoApplication;
 
-import org.json.JSONArray;
+import java.util.List;
 
 public class Main {
 
@@ -13,8 +13,8 @@ public class Main {
 
 		ITodoService service = new TodoService();
 //		service.create(taskOne);
-		JSONArray list = service.getTodoList();		
- 		System.out.println(list);
+		List<TodoBody> list = service.getTodoList();		
+ 		System.out.println(list.get(0).getObjectId());
 	}
 
 }
