@@ -1,9 +1,9 @@
 package com.AndriiHubarenko.TodoApplication;
 
 public interface ITodoService {
-	void create();
-	void getTodo();
+	String create(TodoBody body);
+	void getTodo(Long id);
 	void getTodoList();
-	void update();
-	void remove();
+	void update(TodoBody body);
+	void remove(Long id);
 }

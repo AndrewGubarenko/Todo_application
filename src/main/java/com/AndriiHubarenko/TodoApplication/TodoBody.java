@@ -2,42 +2,62 @@ package com.AndriiHubarenko.TodoApplication;
 
 import java.util.Date;
 
-public class TodoBody {
+import org.json.JSONObject;
 
-	private Long id;
+public class TodoBody{
+
+	private int objectId;
 	private String name;
 	private String comment;
-	private Date date;
+	private Date deadLine;
 	private Boolean isFinished;
-	
-	public Long getId() {
-		return id;
+
+	public int getObjectId() {
+		return objectId;
 	}
-	public void setId(Long id) {
-		this.id = id;
+
+	public void setObjectId(int objectId) {
+		this.objectId = objectId;
 	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public String getComment() {
 		return comment;
 	}
+
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	public Date getDate() {
-		return date;
+
+	public Date getDeadLine() {
+		return deadLine;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+
+	public void setDeadLine(Date deadLine) {
+		this.deadLine = deadLine;
 	}
+
 	public Boolean getIsFinished() {
 		return isFinished;
 	}
+
 	public void setIsFinished(Boolean isFinished) {
 		this.isFinished = isFinished;
-	}	
+	}
+
+	public JSONObject toJson() {
+		JSONObject json = new JSONObject();
+		json.put("Name", name);
+		json.put("Comment", comment);
+		json.put("DeadLine", deadLine);
+		json.put("IsFinished", isFinished);
+		return json;
+	}
 }
