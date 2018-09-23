@@ -10,6 +10,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import org.json.JSONArray;
+
 public class TodoService implements ITodoService {
 	String tableName = "TodoApplication";
 	String targetURL = "https://api.backendless.com/006F4BC5-000C-0188-FF4C-BAB117143000/0C5FB588-52CA-F8E5-FF82-8E4947283E00/data/" + tableName;
@@ -61,8 +63,40 @@ public class TodoService implements ITodoService {
 
 	}
 
-	public void getTodoList() {
-		// TODO Auto-generated method stub
+	public JSONArray getTodoList() {
+		try {
+			URL url = new URL(targetURL);
+			con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("Content-Type", "application/json");
+			con.setDoOutput(false);
+			con.setDoInput(true);
+
+		    //Get Response  
+		    InputStream is = con.getInputStream();
+		    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		    StringBuffer response = new StringBuffer();
+		    String line;
+		    while ((line = rd.readLine()) != null) {
+		      response.append(line);
+		      response.append('\r');
+		    }
+		    rd.close();
+		    JSONArray jsonResponse = new JSONArray(response.toString());
+		    
+		    return jsonResponse;
+			
+		} catch (MalformedURLException ex) {
+			ex.printStackTrace();
+			return null;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		} finally {
+			if (con != null) {
+				con.disconnect();
+			}
+		}
 
 	}
 
@@ -71,8 +105,38 @@ public class TodoService implements ITodoService {
 
 	}
 
-	public void remove(Long id) {
-		// TODO Auto-generated method stub
+	public String remove(String id) {
+		try {
+			URL url = new URL(targetURL + "/" + id);
+			con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("DELETE");
+			con.setRequestProperty("Content-Type", "application/json");
+			con.setDoOutput(true);
+			con.setDoInput(true);
+
+			//Get Response  
+		    InputStream is = con.getInputStream();
+		    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+		    StringBuffer response = new StringBuffer();
+		    String line;
+		    while ((line = rd.readLine()) != null) {
+		      response.append(line);
+		      response.append('\r');
+		    }
+		    rd.close();
+		    return response.toString();
+			
+		} catch (MalformedURLException ex) {
+			ex.printStackTrace();
+			return null;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		} finally {
+			if (con != null) {
+				con.disconnect();
+			}
+		}
 
 	}
 

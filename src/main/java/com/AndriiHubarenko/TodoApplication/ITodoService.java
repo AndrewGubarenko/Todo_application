@@ -1,9 +1,11 @@
 package com.AndriiHubarenko.TodoApplication;
 
+import org.json.JSONArray;
+
 public interface ITodoService {
 	String create(TodoBody body);
 	void getTodo(Long id);
-	void getTodoList();
+	JSONArray getTodoList();
 	void update(TodoBody body);
-	void remove(Long id);
+	String remove(String id);
 }

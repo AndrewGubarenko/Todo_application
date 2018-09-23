@@ -6,17 +6,17 @@ import org.json.JSONObject;
 
 public class TodoBody{
 
-	private int objectId;
+	private String objectId;
 	private String name;
 	private String comment;
 	private Date deadLine;
 	private Boolean isFinished;
 
-	public int getObjectId() {
+	public String getObjectId() {
 		return objectId;
 	}
 
-	public void setObjectId(int objectId) {
+	public void setObjectId(String objectId) {
 		this.objectId = objectId;
 	}
 
