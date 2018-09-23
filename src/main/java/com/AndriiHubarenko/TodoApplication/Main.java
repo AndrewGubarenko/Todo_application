@@ -1,5 +1,4 @@
 package com.AndriiHubarenko.TodoApplication;
-import java.util.List;
 
 public class Main {
 
@@ -12,15 +11,15 @@ public class Main {
 
 		ITodoService service = new TodoService();
 //		service.create(taskOne);
-		
-		List<TodoBody> list = service.getTodoList();
+//		
+//		List<TodoBody> list = service.getTodoList();
 //		TodoBody updatedTodo = list.get(0);
 //		updatedTodo.setComment("final test today");
 //		service.update(updatedTodo);
-		for(TodoBody l: list) {
-			System.out.println(Converter.fromTodoBodyToJson(l));
-		}
- 		System.out.println(service.todoCount());
+//		for(TodoBody l: list) {
+//			System.out.println(Converter.fromTodoBodyToJson(l));
+//		}
+ 		System.out.println(Converter.fromTodoBodyToJson(service.getTodo()));
 	}
 
 }

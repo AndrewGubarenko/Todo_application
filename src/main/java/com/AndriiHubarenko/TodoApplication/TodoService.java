@@ -32,10 +32,23 @@ public class TodoService implements ITodoService {
 		}
 	}
 
-	public TodoBody getTodo(String parameter) {
-		TodoBody result = new TodoBody();
-		
-		return result;
+	public TodoBody getTodo() {
+		try {
+			con = ConnectionUtils.getConnection(false, "/first", "GET");
+			System.out.println();
+			JSONObject jsonResult = new JSONObject(ConnectionUtils.getResponse(con));
+			return Converter.fromJsonToTodoBody(jsonResult);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			return null;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		} finally {
+			if (con != null) {
+				con.disconnect();
+			}
+		}
 	}
 
 	public int todoCount() {
