@@ -110,7 +110,7 @@ public class TodoService implements ITodoService {
 
 	public TodoBody update(TodoBody body) {
 		try {
-			URL url = new URL(targetURL);
+			URL url = new URL(targetURL + "/" + body.getObjectId());
 			con = (HttpURLConnection) url.openConnection();
 			con.setRequestMethod("PUT");
 			con.setRequestProperty("Content-Type", "application/json");
@@ -134,7 +134,7 @@ public class TodoService implements ITodoService {
 		      response.append('\r');
 		    }
 		    rd.close();
-		    return Converter.fromJsonToTodoBody(new JSONObject(response));
+		    return body;
 			
 		} catch (MalformedURLException ex) {
 			ex.printStackTrace();

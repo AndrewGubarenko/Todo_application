@@ -13,8 +13,11 @@ public class Main {
 
 		ITodoService service = new TodoService();
 //		service.create(taskOne);
-		List<TodoBody> list = service.getTodoList();		
- 		System.out.println(list.get(0).getObjectId());
+		List<TodoBody> list = service.getTodoList();
+		TodoBody updatedTodo = list.get(0);
+		updatedTodo.setComment("NEW UPDATED COMMENT FOR TESTING");
+		
+ 		System.out.println(service.update(updatedTodo));
 	}
 
 }
