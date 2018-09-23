@@ -4,8 +4,9 @@ import java.util.List;
 
 public interface ITodoService {
 	TodoBody create(TodoBody body);
-	void getTodo(Long id);
+	TodoBody getTodo(String parameter);
 	List<TodoBody> getTodoList();
+	int todoCount();
 	TodoBody update(TodoBody body);
 	String remove(String id);
 }

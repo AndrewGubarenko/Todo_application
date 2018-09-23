@@ -17,7 +17,7 @@ public class Main {
 		TodoBody updatedTodo = list.get(0);
 		updatedTodo.setComment("NEW UPDATED COMMENT FOR TESTING");
 		
- 		System.out.println(service.update(updatedTodo));
+ 		System.out.println(service.todoCount());
 	}
 
 }

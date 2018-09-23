@@ -28,26 +28,26 @@ public class TodoService implements ITodoService {
 			con.setRequestProperty("Content-Type", "application/json");
 			con.setDoOutput(true);
 			con.setDoInput(true);
-			
-			//Send request
-		    DataOutputStream wr = new DataOutputStream (con.getOutputStream());
-		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
-		    writer.write(Converter.fromTodoBodyToJson(body).toString());
-		    writer.flush();
-		    writer.close();
 
-		    //Get Response  
-		    InputStream is = con.getInputStream();
-		    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		    StringBuffer response = new StringBuffer();
-		    String line;
-		    while ((line = rd.readLine()) != null) {
-		      response.append(line);
-		      response.append('\r');
-		    }
-		    rd.close();
-		    return Converter.fromJsonToTodoBody(new JSONObject(response));
-			
+			// Send request
+			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
+			writer.write(Converter.fromTodoBodyToJson(body).toString());
+			writer.flush();
+			writer.close();
+
+			// Get Response
+			InputStream is = con.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			StringBuffer response = new StringBuffer();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				response.append(line);
+				response.append('\r');
+			}
+			rd.close();
+			return Converter.fromJsonToTodoBody(new JSONObject(response));
+
 		} catch (MalformedURLException ex) {
 			ex.printStackTrace();
 			return null;
@@ -61,9 +61,40 @@ public class TodoService implements ITodoService {
 		}
 	}
 
-	public void getTodo(Long id) {
-		// TODO Auto-generated method stub
+	public TodoBody getTodo(String parameter) {
+		TodoBody result = new TodoBody();
 
+		return result;
+	}
+
+	public int todoCount() {
+		int count = 0;
+		try {
+			URL url = new URL(targetURL + "/count");
+			con = (HttpURLConnection) url.openConnection();
+			con.setRequestMethod("GET");
+			con.setRequestProperty("Content-Type", "application/json");
+			con.setDoOutput(false);
+			con.setDoInput(true);
+
+			// Get Response
+			InputStream is = con.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			count = Integer.parseInt(rd.readLine());
+			rd.close();
+			return count;
+
+		} catch (MalformedURLException ex) {
+			ex.printStackTrace();
+			return 0;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return 0;
+		} finally {
+			if (con != null) {
+				con.disconnect();
+			}
+		}
 	}
 
 	public List<TodoBody> getTodoList() {
@@ -75,25 +106,25 @@ public class TodoService implements ITodoService {
 			con.setDoOutput(false);
 			con.setDoInput(true);
 
-		    //Get Response  
-		    InputStream is = con.getInputStream();
-		    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		    StringBuffer response = new StringBuffer();
-		    String line;
-		    while ((line = rd.readLine()) != null) {
-		      response.append(line);
-		      response.append('\r');
-		    }
-		    rd.close();
-		    JSONArray jsonResponse = new JSONArray(response.toString());
-		    List<TodoBody> result = new ArrayList<TodoBody>();
-		    
-		    for(int i = 0; i < jsonResponse.length(); i++) {
-		    	result.add(Converter.fromJsonToTodoBody((JSONObject) jsonResponse.get(i)));
-		    }
-		    
-		    return result;
-			
+			// Get Response
+			InputStream is = con.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			StringBuffer response = new StringBuffer();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				response.append(line);
+				response.append('\r');
+			}
+			rd.close();
+			JSONArray jsonResponse = new JSONArray(response.toString());
+			List<TodoBody> result = new ArrayList<TodoBody>();
+
+			for (int i = 0; i < jsonResponse.length(); i++) {
+				result.add(Converter.fromJsonToTodoBody((JSONObject) jsonResponse.get(i)));
+			}
+
+			return result;
+
 		} catch (MalformedURLException ex) {
 			ex.printStackTrace();
 			return null;
@@ -105,7 +136,6 @@ public class TodoService implements ITodoService {
 				con.disconnect();
 			}
 		}
-
 	}
 
 	public TodoBody update(TodoBody body) {
@@ -116,26 +146,26 @@ public class TodoService implements ITodoService {
 			con.setRequestProperty("Content-Type", "application/json");
 			con.setDoOutput(true);
 			con.setDoInput(true);
-			
-			//Send request
-		    DataOutputStream wr = new DataOutputStream (con.getOutputStream());
-		    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
-		    writer.write(Converter.fromTodoBodyToJson(body).toString());
-		    writer.flush();
-		    writer.close();
 
-		    //Get Response  
-		    InputStream is = con.getInputStream();
-		    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		    StringBuffer response = new StringBuffer();
-		    String line;
-		    while ((line = rd.readLine()) != null) {
-		      response.append(line);
-		      response.append('\r');
-		    }
-		    rd.close();
-		    return body;
-			
+			// Send request
+			DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+			BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
+			writer.write(Converter.fromTodoBodyToJson(body).toString());
+			writer.flush();
+			writer.close();
+
+			// Get Response
+			InputStream is = con.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			StringBuffer response = new StringBuffer();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				response.append(line);
+				response.append('\r');
+			}
+			rd.close();
+			return body;
+
 		} catch (MalformedURLException ex) {
 			ex.printStackTrace();
 			return null;
@@ -147,7 +177,6 @@ public class TodoService implements ITodoService {
 				con.disconnect();
 			}
 		}
-
 	}
 
 	public String remove(String id) {
@@ -159,18 +188,18 @@ public class TodoService implements ITodoService {
 			con.setDoOutput(true);
 			con.setDoInput(true);
 
-			//Get Response  
-		    InputStream is = con.getInputStream();
-		    BufferedReader rd = new BufferedReader(new InputStreamReader(is));
-		    StringBuffer response = new StringBuffer();
-		    String line;
-		    while ((line = rd.readLine()) != null) {
-		      response.append(line);
-		      response.append('\r');
-		    }
-		    rd.close();
-		    return response.toString();
-			
+			// Get Response
+			InputStream is = con.getInputStream();
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			StringBuffer response = new StringBuffer();
+			String line;
+			while ((line = rd.readLine()) != null) {
+				response.append(line);
+				response.append('\r');
+			}
+			rd.close();
+			return response.toString();
+
 		} catch (MalformedURLException ex) {
 			ex.printStackTrace();
 			return null;
@@ -182,7 +211,5 @@ public class TodoService implements ITodoService {
 				con.disconnect();
 			}
 		}
-
 	}
-
 }
