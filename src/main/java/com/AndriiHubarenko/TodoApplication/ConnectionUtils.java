@@ -13,7 +13,7 @@ import java.net.URL;
 public class ConnectionUtils {
 	static String tableName = "TodoApplication";
 	static String targetURL = "https://api.backendless.com/006F4BC5-000C-0188-FF4C-BAB117143000/0C5FB588-52CA-F8E5-FF82-8E4947283E00/data/" + tableName;
-
+	
 	public static HttpURLConnection getConnection(Boolean doOutput, String UrlParams, String method) throws IOException {
 		HttpURLConnection con = null;
 		URL url = new URL(targetURL + UrlParams);

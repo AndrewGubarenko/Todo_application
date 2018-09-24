@@ -2,7 +2,7 @@ package com.AndriiHubarenko.TodoApplication;
 
 import java.util.Date;
 
-public class TodoBody{
+public class TodoBody {
 
 	private String objectId;
 	private String name;
