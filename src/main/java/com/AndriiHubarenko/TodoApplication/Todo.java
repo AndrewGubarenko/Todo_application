@@ -1,7 +1,11 @@
 package com.AndriiHubarenko.TodoApplication;
 
 import java.util.Date;
-
+/**
+ * 
+ * @author Andrii Hubarenko
+ *<p>The Todo object</p>
+ */
 public class Todo {
 
 	private String objectId;
