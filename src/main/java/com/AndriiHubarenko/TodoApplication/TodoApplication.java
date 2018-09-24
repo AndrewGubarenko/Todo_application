@@ -81,7 +81,16 @@ public class TodoApplication {
 				System.out.print("Enter the todoComment: ");
 				todoComment = reader.nextLine();
 				System.out.print("Enter the end Date of todo in format \"24-09-2018\": ");
-				deadLine = ((TodoService) service).dateConverter(reader.nextLine());
+				String strCreateDate = reader.nextLine();
+				if(strCreateDate.matches("^(((0[1-9]|[12]\\d|3[01])\\-(0[13578]|1[02])\\-((19|[2-9]\\d)\\d{2}))|((0[1-9]|[12]\\d|30)\\-(0[13456789]|1[012])\\-((19|[2-9]\\d)\\d{2}))|((0[1-9]|1\\d|2[0-8])\\-02\\-((19|[2-9]\\d)\\d{2}))|(29\\-02\\-((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$"))
+					deadLine = ((TodoService) service).dateConverter(strCreateDate);
+				else {
+					System.out.println();
+					System.out.println("Wrong date format. Try again ");
+					System.out.print("Enter the method: ");
+					break;
+				}
+					
 				Todo todo = new Todo();
 				todo.setName(todoName);
 				todo.setComment(todoComment);
@@ -118,10 +127,18 @@ public class TodoApplication {
 					todoComment = temp;
 
 				System.out.print("Enter the end data of todo in format \\\"24-09-2018\\\" or leave it unchanged by pressed Enter: ");
+				String strUpdateDate = reader.nextLine();
 				if ((temp = reader.nextLine()).isEmpty())
 					deadLine = updateedTodo.getDeadLine();
 				else
-					deadLine = ((TodoService) service).dateConverter(temp);
+					if(strUpdateDate.matches("^(((0[1-9]|[12]\\d|3[01])\\-(0[13578]|1[02])\\-((19|[2-9]\\d)\\d{2}))|((0[1-9]|[12]\\d|30)\\-(0[13456789]|1[012])\\-((19|[2-9]\\d)\\d{2}))|((0[1-9]|1\\d|2[0-8])\\-02\\-((19|[2-9]\\d)\\d{2}))|(29\\-02\\-((1[6-9]|[2-9]\\d)(0[48]|[2468][048]|[13579][26])|((16|[2468][048]|[3579][26])00))))$"))
+						deadLine = ((TodoService) service).dateConverter(strUpdateDate);
+					else {
+						System.out.println();
+						System.out.println("Wrong date format. Try again ");
+						System.out.print("Enter the method: ");
+						break;
+					}
 
 				System.out.print("Enter is todo out of date in format: \"true\" (means yeas) or \"false\" (means no) or leave it unchanged by pressed Enter: ");
 				if ((temp = reader.nextLine()).isEmpty())
@@ -187,6 +204,14 @@ public class TodoApplication {
 				Integer numOfRemove = Integer.parseInt(reader.nextLine());
 				todoId = listForRemove.get(numOfRemove).getObjectId();
 				System.out.println(service.remove(todoId));
+				System.out.println();
+				System.out.print("Enter the method: ");
+				break;
+			/**
+			 * <p>Default actions in a case of wrong input datas.</p> 
+			 */
+			default: 
+				System.out.println("Wrong datas input! Try again");
 				System.out.println();
 				System.out.print("Enter the method: ");
 				break;
