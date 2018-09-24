@@ -89,7 +89,7 @@ public class TodoService implements ITodoService {
 	 * @param stringDate.
 	 * @return date in a format without time.
 	 */
-	static Date dateConverter(String stringDate) {
+	Date dateConverter(String stringDate) {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		try {
 			Date date = sdf.parse(stringDate);
@@ -105,7 +105,7 @@ public class TodoService implements ITodoService {
 	 * @return result.
 	 * @throws ParseException.
 	 */
-	static Todo fromJsonToTodoBody(JSONObject target) throws ParseException {
+	 Todo fromJsonToTodoBody(JSONObject target) throws ParseException {
 		Todo result = new Todo();
 
 		result.setObjectId(target.getString("objectId"));
@@ -121,7 +121,7 @@ public class TodoService implements ITodoService {
 	 * @param target.
 	 * @return result.
 	 */
-	static JSONObject fromTodoBodyToJson(Todo target) {
+	 JSONObject fromTodoBodyToJson(Todo target) {
 		JSONObject result = new JSONObject();
 
 		result.put("Name", target.getName());
@@ -131,11 +131,7 @@ public class TodoService implements ITodoService {
 
 		return result;
 	}
-	/**
-	 * <p>Calls method create(Todo todo) from TodoService.</p> 
-	 * @param todo object you have just created.
-	 * @return todo or print a stacktrase of an exception.
-	 */
+	
 	public Todo create(Todo body) {
 		try {
 			con = getConnection(true, "", "POST");
@@ -153,10 +149,7 @@ public class TodoService implements ITodoService {
 			}
 		}
 	}
-	/**
-	 * <p>Calls method getFirstTodo() from TodoService.</p> 
-	 * @return todo first object in DB or print a stacktrase of an exception.
-	 */
+	
 	public Todo getFirstTodo() {
 		try {
 			con = getConnection(false, "/first", "GET");
@@ -172,10 +165,7 @@ public class TodoService implements ITodoService {
 			}
 		}
 	}
-	/**
-	 * <p>Calls method getLastTodo() from TodoService.</p> 
-	 * @return todo last object in DB or print a stacktrase of an exception.
-	 */	
+	
 	public Todo getLastTodo() {
 		try {
 			con = getConnection(false, "/last", "GET");
@@ -191,10 +181,7 @@ public class TodoService implements ITodoService {
 			}
 		}
 	}
-	/**
-	 * <p>Calls method countTodo() from TodoService.</p> 
-	 * @return size the int value of todo`s number in DB or print a stacktrase of an exception.
-	 */
+	
 	public int todoCount() {
 		try {
 			con = getConnection(false, "/count", "GET");
@@ -209,10 +196,7 @@ public class TodoService implements ITodoService {
 			}
 		}
 	}
-	/**
-	 * <p>Calls method getTodoList() from TodoService.</p> 
-	 * @return result the List<Todo> of all objects in the DB or print a stacktrase of an exception.
-	 */
+	
 	public List<Todo> getTodoList() {
 		try {
 			con = getConnection(false, "", "GET");
@@ -231,11 +215,7 @@ public class TodoService implements ITodoService {
 			}
 		}
 	}
-	/**
-	 * <p>Calls method update(Todo todo) from TodoService.</p> 
-	 * @param todo object from DB you are going to update.
-	 * @return todo or print a stacktrase of an exception.
-	 */
+	
 	public Todo update(Todo body) {
 		try {
 			con = getConnection(true, "/" + body.getObjectId(), "PUT");
@@ -253,10 +233,7 @@ public class TodoService implements ITodoService {
 			}
 		}
 	}
-	/**
-	 * <p>Calls method remove from TodoService.</p> 
-	 * @param todoId the String value of todo`s id, you are going to remove or print a stacktrase of an exception.
-	 */
+	
 	public String remove(String id) {
 		try {
 			con = getConnection(false, "/" + id, "DELETE");

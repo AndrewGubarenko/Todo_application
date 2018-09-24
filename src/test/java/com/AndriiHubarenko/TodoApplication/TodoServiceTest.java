@@ -11,10 +11,11 @@ public class TodoServiceTest {
 
 	@Test
 	public void testCreateTodo() {
+		TodoService service = new TodoService();
 		Todo testTodo = new Todo();
 		String name = "Test 4";
 		String comment = "Test for creation";
-		Date deadline = TodoService.dateConverter("24-09-2018");
+		Date deadline = service.dateConverter("24-09-2018");
 		boolean isFinished = false;
 		ITodoService testService = new TodoService();
 		testTodo.setName(name);

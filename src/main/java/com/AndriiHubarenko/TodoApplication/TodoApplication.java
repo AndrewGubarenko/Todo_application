@@ -20,8 +20,8 @@ public class TodoApplication {
 	 * 				</li>
 	 *        	 	<li>
 	 *        	 		<p>update: also needs the additional parameters from you. Shows to
-	 *         	   you a list of Todo`s objects, then you need to choose nte number
-	 *         	   od object in a List, starting from 0, you are going to update.
+	 *         	   you a list of Todo`s objects, then you need to choose the number
+	 *         	   of object in a List, starting from 0, you are going to update.
 	 *         	   Then continue following the instructions on the screen.</p>
 	 * 				</li>
 	 *       	  	<li>
@@ -43,12 +43,17 @@ public class TodoApplication {
 	 *       	  	<li>
 	 *         			<p>remove: shows to you a List of Todo`s objects and ask to choose
 	 * 				 one, you are going to remove. You need to enter an index of the
-	 *        	 	 object in the list, startinc count from 0.</p>
+	 *        	 	 object in the list, starting count from 0.</p>
 	 * 				</li>
 	 *        	 </ul>
 	 *         	</p>
 	 */
-
+	
+	/**
+	 * The Maim method for running program.
+	 * @param args standard array of arguments.
+	 * @throws ParseException standard exception for parser.
+	 */
 	public static void main(String[] args) throws ParseException {
 		String todoName;
 		String todoComment;
@@ -76,7 +81,7 @@ public class TodoApplication {
 				System.out.print("Enter the todoComment: ");
 				todoComment = reader.nextLine();
 				System.out.print("Enter the end Date of todo in format \"24-09-2018\": ");
-				deadLine = TodoService.dateConverter(reader.nextLine());
+				deadLine = ((TodoService) service).dateConverter(reader.nextLine());
 				Todo todo = new Todo();
 				todo.setName(todoName);
 				todo.setComment(todoComment);
@@ -93,7 +98,7 @@ public class TodoApplication {
 
 				List<Todo> list = service.getTodoList();
 				for (Todo t : list) {
-					System.out.println(TodoService.fromTodoBodyToJson(t).toString() + " todiId: " + t.getObjectId());
+					System.out.println(((TodoService) service).fromTodoBodyToJson(t).toString() + " todiId: " + t.getObjectId());
 				}
 				System.out.println();
 				System.out.print("Enter the number of todo you are going to update begin from 0: ");
@@ -116,7 +121,7 @@ public class TodoApplication {
 				if ((temp = reader.nextLine()).isEmpty())
 					deadLine = updateedTodo.getDeadLine();
 				else
-					deadLine = TodoService.dateConverter(temp);
+					deadLine = ((TodoService) service).dateConverter(temp);
 
 				System.out.print("Enter is todo out of date in format: \"true\" (means yeas) or \"false\" (means no) or leave it unchanged by pressed Enter: ");
 				if ((temp = reader.nextLine()).isEmpty())
@@ -137,7 +142,7 @@ public class TodoApplication {
 			 */
 			case "getFirst":
 				Todo todoFirst = service.getFirstTodo();
-				System.out.println(TodoService.fromTodoBodyToJson(todoFirst).toString() + " todiId: " + todoFirst.getObjectId());
+				System.out.println(((TodoService) service).fromTodoBodyToJson(todoFirst).toString() + " todiId: " + todoFirst.getObjectId());
 				System.out.println();
 				System.out.print("Enter the method: ");
 				break;
@@ -146,7 +151,7 @@ public class TodoApplication {
 			 */	
 			case "getLast":
 				Todo todoLast = service.getLastTodo();
-				System.out.println(TodoService.fromTodoBodyToJson(todoLast).toString() + " todiId: " + todoLast.getObjectId());
+				System.out.println(((TodoService) service).fromTodoBodyToJson(todoLast).toString() + " todiId: " + todoLast.getObjectId());
 				System.out.println();
 				System.out.print("Enter the method: ");
 				break;
@@ -156,7 +161,7 @@ public class TodoApplication {
 			case "getList":
 				List<Todo> todoList = service.getTodoList();
 				for (Todo t : todoList) {
-					System.out.println(TodoService.fromTodoBodyToJson(t).toString() + " todiId: " + t.getObjectId());
+					System.out.println(((TodoService) service).fromTodoBodyToJson(t).toString() + " todiId: " + t.getObjectId());
 				}
 				System.out.println();
 				System.out.print("Enter the method: ");
@@ -175,7 +180,7 @@ public class TodoApplication {
 			case "remove":
 				List<Todo> listForRemove = service.getTodoList();
 				for (Todo t : listForRemove) {
-					System.out.println(TodoService.fromTodoBodyToJson(t).toString() + " todiId: " + t.getObjectId());
+					System.out.println(((TodoService) service).fromTodoBodyToJson(t).toString() + " todiId: " + t.getObjectId());
 				}
 				System.out.println();
 				System.out.print("Enter the number of todo you are going to remove begin from 0: ");
