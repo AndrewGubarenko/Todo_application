@@ -11,10 +11,10 @@ public class TodoServiceTest {
 
 	@Test
 	public void testCreateTodo() {
-		TodoBody testTodo = new TodoBody();
+		Todo testTodo = new Todo();
 		String name = "Test 4";
 		String comment = "Test for creation";
-		Date deadline = Converter.dateConverter("24-09-2018");
+		Date deadline = TodoService.dateConverter("24-09-2018");
 		boolean isFinished = false;
 		ITodoService testService = new TodoService();
 		testTodo.setName(name);
@@ -23,7 +23,7 @@ public class TodoServiceTest {
 		testTodo.setIsFinished(isFinished);
 		
 		testService.create(testTodo);
-		TodoBody test2Todo = testService.getLastTodo();
+		Todo test2Todo = testService.getLastTodo();
 		
 		assertEquals(name, test2Todo.getName());
 		assertEquals(comment, test2Todo.getComment());
@@ -36,7 +36,7 @@ public class TodoServiceTest {
 		String comment = "#2 test Comment";
 
 		ITodoService testService = new TodoService();
-		TodoBody testTodo = testService.getFirstTodo();
+		Todo testTodo = testService.getFirstTodo();
 		testTodo.setComment(comment);
 		testService.update(testTodo);
 		
@@ -46,7 +46,7 @@ public class TodoServiceTest {
 	@Test
 	public void testGetTodoList() {
 		ITodoService testService = new TodoService();
-		List<TodoBody> list = testService.getTodoList();
+		List<Todo> list = testService.getTodoList();
 		
 		assertEquals(list.size(), testService.todoCount());
 	}

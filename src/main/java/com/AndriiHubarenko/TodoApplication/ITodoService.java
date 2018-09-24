@@ -3,11 +3,11 @@ package com.AndriiHubarenko.TodoApplication;
 import java.util.List;
 
 public interface ITodoService {
-	TodoBody create(TodoBody body);
-	TodoBody getFirstTodo();
-	TodoBody getLastTodo();
-	List<TodoBody> getTodoList();
+	Todo create(Todo body);
+	Todo getFirstTodo();
+	Todo getLastTodo();
+	List<Todo> getTodoList();
 	int todoCount();
-	TodoBody update(TodoBody body);
+	Todo update(Todo body);
 	String remove(String id);
 }
