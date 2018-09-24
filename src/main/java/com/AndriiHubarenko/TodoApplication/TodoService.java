@@ -18,6 +18,10 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 /**
  * 
  * @author Andrii Hubarenko
@@ -62,7 +66,8 @@ public class TodoService implements ITodoService {
 	private void sendRequest(HttpURLConnection con, Todo body) throws IOException {
 		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
 		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(wr, "UTF-8"));
-		writer.write(fromTodoBodyToJson(body).toString());
+		ObjectMapper objectMapper = new ObjectMapper();
+		writer.write(objectMapper.writeValueAsString(body));
 		writer.flush();
 		writer.close();
 	}
@@ -99,38 +104,6 @@ public class TodoService implements ITodoService {
 			return null;
 		}
 	}
-	/**
-	 *<p>Method fromJsonToTodoBody(JSONObject target) get aJSON object and convert it to Todo object.</p> 
-	 * @param target.
-	 * @return result.
-	 * @throws ParseException.
-	 */
-	 Todo fromJsonToTodoBody(JSONObject target) throws ParseException {
-		Todo result = new Todo();
-
-		result.setObjectId(target.getString("objectId"));
-		result.setName(target.getString("Name"));
-		result.setComment(target.getString("Comment"));
-		result.setDeadLine(new Date((Long) target.get("DeadLine")));
-		result.setIsFinished(target.getBoolean("IsFinished"));
-
-		return result;
-	}
-	/**
-	 * <p>Method fromTodoBodyToJson(Todo target) get the Todo object and convert it to JSON object.</p> 
-	 * @param target.
-	 * @return result.
-	 */
-	 JSONObject fromTodoBodyToJson(Todo target) {
-		JSONObject result = new JSONObject();
-
-		result.put("Name", target.getName());
-		result.put("Comment", target.getComment());
-		result.put("DeadLine", target.getDeadLine());
-		result.put("IsFinished", target.getIsFinished());
-
-		return result;
-	}
 	
 	public Todo create(Todo body) {
 		try {
@@ -149,14 +122,16 @@ public class TodoService implements ITodoService {
 			}
 		}
 	}
-	
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	public Todo getFirstTodo() {
 		try {
 			con = getConnection(false, "/first", "GET");
 			System.out.println();
 			JSONObject jsonResult = new JSONObject(getResponse(con));
-			return fromJsonToTodoBody(jsonResult);
-		} catch (IOException | ParseException ex) {
+			ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			return objectMapper.readValue(jsonResult.toString(), Todo.class);
+		} catch (IOException ex) {
 			ex.printStackTrace();
 			return null;
 		} finally {
@@ -165,14 +140,16 @@ public class TodoService implements ITodoService {
 			}
 		}
 	}
-	
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	public Todo getLastTodo() {
 		try {
 			con = getConnection(false, "/last", "GET");
 			System.out.println();
 			JSONObject jsonResult = new JSONObject(getResponse(con));
-			return fromJsonToTodoBody(jsonResult);
-		} catch (IOException | ParseException ex) {
+			ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			return objectMapper.readValue(jsonResult.toString(), Todo.class);
+		} catch (IOException ex) {
 			ex.printStackTrace();
 			return null;
 		} finally {
@@ -196,17 +173,19 @@ public class TodoService implements ITodoService {
 			}
 		}
 	}
-	
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	public List<Todo> getTodoList() {
 		try {
 			con = getConnection(false, "", "GET");
 			JSONArray jsonResponse = new JSONArray(getResponse(con));
 			List<Todo> result = new ArrayList<Todo>();
 			for (int i = 0; i < jsonResponse.length(); i++) {
-				result.add(fromJsonToTodoBody((JSONObject) jsonResponse.get(i)));
+				ObjectMapper objectMapper = new ObjectMapper();
+				objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+				result.add(objectMapper.readValue(jsonResponse.get(i).toString(), Todo.class));
 			}
 			return result;
-		} catch (IOException | JSONException | ParseException ex) {
+		} catch (IOException | JSONException ex) {
 			ex.printStackTrace();
 			return null;
 		} finally {

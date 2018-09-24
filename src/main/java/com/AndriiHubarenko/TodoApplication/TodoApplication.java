@@ -5,6 +5,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 public class TodoApplication {
 	/**
 	 * @author Andrii Hubarenko
@@ -12,7 +15,7 @@ public class TodoApplication {
 	 *         <p>To start using the application, you should to follow the
 	 *            instructions on a screen and just to write the parameters in a
 	 *            correct way.</p>
-	 *         <p>Firstly you will be asked to enter the one of the :
+	 *         <p>Firstly you will be asked to enter the one of the methods:
 	 *     	    <ul>
 	 *       	  	<li>
 	 *        	 		<p>create: needs to write the additional parameters. Just follow the
@@ -53,8 +56,9 @@ public class TodoApplication {
 	 * The Maim method for running program.
 	 * @param args standard array of arguments.
 	 * @throws ParseException standard exception for parser.
+	 * @throws JsonProcessingException standard exception for Jackson.
 	 */
-	public static void main(String[] args) throws ParseException {
+	public static void main(String[] args) throws ParseException, JsonProcessingException {
 		String todoName;
 		String todoComment;
 		Date deadLine;
@@ -64,6 +68,7 @@ public class TodoApplication {
 		String temp;
 
 		ITodoService service = new TodoService();
+		ObjectMapper objectMapper = new ObjectMapper();
 
 		Scanner reader = new Scanner(System.in);
 		System.out.print("Enter the method: ");
@@ -107,7 +112,7 @@ public class TodoApplication {
 
 				List<Todo> list = service.getTodoList();
 				for (Todo t : list) {
-					System.out.println(((TodoService) service).fromTodoBodyToJson(t).toString() + " todiId: " + t.getObjectId());
+					System.out.println((objectMapper.writeValueAsString(t)) + " todiId: " + t.getObjectId());
 				}
 				System.out.println();
 				System.out.print("Enter the number of todo you are going to update begin from 0: ");
@@ -159,7 +164,7 @@ public class TodoApplication {
 			 */
 			case "getFirst":
 				Todo todoFirst = service.getFirstTodo();
-				System.out.println(((TodoService) service).fromTodoBodyToJson(todoFirst).toString() + " todiId: " + todoFirst.getObjectId());
+				System.out.println(objectMapper.writeValueAsString(todoFirst) + " todiId: " + todoFirst.getObjectId());
 				System.out.println();
 				System.out.print("Enter the method: ");
 				break;
@@ -168,7 +173,7 @@ public class TodoApplication {
 			 */	
 			case "getLast":
 				Todo todoLast = service.getLastTodo();
-				System.out.println(((TodoService) service).fromTodoBodyToJson(todoLast).toString() + " todiId: " + todoLast.getObjectId());
+				System.out.println(objectMapper.writeValueAsString(todoLast) + " todiId: " + todoLast.getObjectId());
 				System.out.println();
 				System.out.print("Enter the method: ");
 				break;
@@ -178,7 +183,7 @@ public class TodoApplication {
 			case "getList":
 				List<Todo> todoList = service.getTodoList();
 				for (Todo t : todoList) {
-					System.out.println(((TodoService) service).fromTodoBodyToJson(t).toString() + " todiId: " + t.getObjectId());
+					System.out.println(objectMapper.writeValueAsString(t) + " todiId: " + t.getObjectId());
 				}
 				System.out.println();
 				System.out.print("Enter the method: ");
@@ -197,7 +202,7 @@ public class TodoApplication {
 			case "remove":
 				List<Todo> listForRemove = service.getTodoList();
 				for (Todo t : listForRemove) {
-					System.out.println(((TodoService) service).fromTodoBodyToJson(t).toString() + " todiId: " + t.getObjectId());
+					System.out.println(objectMapper.writeValueAsString(t) + " todiId: " + t.getObjectId());
 				}
 				System.out.println();
 				System.out.print("Enter the number of todo you are going to remove begin from 0: ");
