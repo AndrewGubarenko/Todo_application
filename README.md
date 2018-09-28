@@ -1,18 +1,22 @@
-To test the TodoApplication run the JAR file using console.
- Follow the instructions on a screen and just to write the parameters in a correct way.
+# Todo_application
+Implementation of Todo application in Java according to Backendless Programming Assignment
 
- Firstly you will be asked to enter the one of the methods:
+To test the TodoApplication run the JAR file using console. 
 
-	- create: needs to write the additional parameters. Just follow the instructions on the screen.<
+Follow the instructions on a screen and just to write the parameters in a correct way.
 
-	- update: also needs the additional parameters from you. Shows to you a list of Todo`s objects, then you need to choose the number of object in a List, counting from 0, you are going to update. Then continue following the instructions on the screen.
+Firstly you will be asked to enter the one of the methods:
 
-	- getFirst: no needs any additional parameters, only correct name of method. Returns the response in string format of first Todo object in the DB table or a stacktrace of exception
-	
-	- getLast: the same as the getFirst, just returns the last object in DB table</p>
+- create: needs to write the additional parameters. Just follow the instructions on the screen.<
 
-	- getList: also no needs additional parameters and returns a List of all objects in DB table.
+- update: also needs the additional parameters from you. Shows to you a list of Todo`s objects, then you need to choose the number of object in a List, counting from 0, you are going to update. Then continue following the instructions on the screen.
 
-	- countTodo: returns the int value on Todo`s objects number in a D.
+- getFirst: no needs any additional parameters, only correct name of method. Returns the response in string format of first Todo object in the DB table or a stacktrace of exception
 
-	- remove: shows to you a List of Todo`s objects and ask to choose one, you are going to remove. You need to enter an index of the object in the list, starting count from 0.
+- getLast: the same as the getFirst, just returns the last object in DB table</p>
+
+- getList: also no needs additional parameters and returns a List of all objects in DB table.
+
+- countTodo: returns the int value on Todo`s objects number in a D.
+
+- remove: shows to you a List of Todo`s objects and ask to choose one, you are going to remove. You need to enter an index of the object in the list, starting count from 0.
