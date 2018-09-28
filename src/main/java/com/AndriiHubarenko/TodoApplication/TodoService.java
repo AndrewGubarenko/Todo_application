@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,14 +30,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
  *
  */
 public class TodoService implements ITodoService {
+	private static final Logger LOGGER = Logger.getLogger(TodoService.class.getSimpleName());
 	/**
 	 * <p>The name of table in a server side</p>
 	 */
-	private static String TABLE_NAME = "TodoApplication";
+	private static final String TABLE_NAME = "TodoApplication";
 	/**
 	 * <p>The basic URL to the DB</p>
 	 */
-	private static String TARGET_URL = "https://api.backendless.com/006F4BC5-000C-0188-FF4C-BAB117143000/0C5FB588-52CA-F8E5-FF82-8E4947283E00/data/" + TABLE_NAME;
+	private static final String TARGET_URL = "https://api.backendless.com/006F4BC5-000C-0188-FF4C-BAB117143000/0C5FB588-52CA-F8E5-FF82-8E4947283E00/data/" + TABLE_NAME;
 	private HttpURLConnection con = null;
 	/**
 	 * <p>Method getConnection(Boolean doOutput, String UrlParams, String method) from TodoService.</p> 
@@ -99,8 +101,8 @@ public class TodoService implements ITodoService {
 		try {
 			Date date = sdf.parse(stringDate);
 			return date;
-		} catch (ParseException e) {
-			e.printStackTrace();
+		} catch (ParseException ex) {
+			LOGGER.warn(ex.getMessage());
 			return null;
 		}
 	}
@@ -114,7 +116,7 @@ public class TodoService implements ITodoService {
 			return body;
 
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			LOGGER.warn(ex.getMessage());
 			return null;
 		} finally {
 			if (con != null) {
@@ -132,7 +134,7 @@ public class TodoService implements ITodoService {
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			return objectMapper.readValue(jsonResult.toString(), Todo.class);
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			LOGGER.warn(ex.getMessage());
 			return null;
 		} finally {
 			if (con != null) {
@@ -150,7 +152,7 @@ public class TodoService implements ITodoService {
 			objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 			return objectMapper.readValue(jsonResult.toString(), Todo.class);
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			LOGGER.warn(ex.getMessage());
 			return null;
 		} finally {
 			if (con != null) {
@@ -165,7 +167,7 @@ public class TodoService implements ITodoService {
 			return Integer.parseInt(getResponse(con).trim());
 
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			LOGGER.warn(ex.getMessage());
 			return 0;
 		} finally {
 			if (con != null) {
@@ -186,7 +188,7 @@ public class TodoService implements ITodoService {
 			}
 			return result;
 		} catch (IOException | JSONException ex) {
-			ex.printStackTrace();
+			LOGGER.warn(ex.getMessage());
 			return null;
 		} finally {
 			if (con != null) {
@@ -204,7 +206,7 @@ public class TodoService implements ITodoService {
 			return body;
 
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			LOGGER.warn(ex.getMessage());
 			return null;
 		} finally {
 			if (con != null) {
@@ -220,7 +222,7 @@ public class TodoService implements ITodoService {
 			return getResponse(con);
 
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			LOGGER.warn(ex.getMessage());
 			return null;
 		} finally {
 			if (con != null) {
